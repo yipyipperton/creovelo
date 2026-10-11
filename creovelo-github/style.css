@@ -258,18 +258,26 @@ button:hover .mark { transform: scale(.82); opacity: 1; }
   display: flex;
   width: max-content;
   animation: concept-drift 52s linear infinite;
-  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
-.concept-marquee:hover .concept-track,
-.concept-marquee:focus-within .concept-track {
-  animation-play-state: paused;
+@media (hover: hover) and (pointer: fine) {
+  .concept-marquee:hover .concept-track,
+  .concept-marquee:focus-within .concept-track {
+    animation-play-state: paused;
+  }
 }
 .concept-marquee.is-static {
   overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
+.concept-marquee.is-static::-webkit-scrollbar { display: none; }
 .concept-marquee.is-static .concept-track {
   animation: none;
 }
+.concept-marquee.is-static .concept-card { scroll-snap-align: center; }
 .concept-group {
   display: flex;
   flex-shrink: 0;
@@ -1052,7 +1060,9 @@ dialog .button { width: 100%; margin-top: 8px; }
 }
 
 @media (max-width: 820px) {
-  :root { --header: 72px; }
+  :root { --header: 68px; }
+  html, body { overflow-x: clip; max-width: 100%; }
+  .container { width: min(1320px, 88%); }
   .header nav {
     display: none;
     position: fixed;
@@ -1110,48 +1120,73 @@ dialog .button { width: 100%; margin-top: 8px; }
   html.nav-open .menu-lines:before { transform: translateY(3px) rotate(45deg); }
   html.nav-open .menu-lines:after { transform: translateY(-3px) rotate(-45deg); }
 
-  .hero { padding-top: 36px; }
-  .hero h1 { font-size: clamp(48px, 13vw, 78px); }
-  .hero-lead p { font-size: 16px; }
-  .concept-marquee { margin-top: 32px; }
-  .concept-group { gap: 16px; padding-right: 16px; }
-  .concept-card {
-    flex: 0 0 76vw;
-    width: 76vw;
+  .wordmark { font-size: 32px; }
+  .hero { padding: 22px 0 12px; }
+  .hero-kicker {
+    font-size: 10px;
+    letter-spacing: .08em;
+    margin-bottom: 16px;
+    padding-inline: 8%;
   }
-  .concept-title { font-size: clamp(34px, 8vw, 52px); }
-  .concept-brand { font-size: 24px; }
-  .concept-track { animation-duration: 42s; }
-  .section { padding-block: 72px; }
-  .project-tabs > button { font-size: 24px; }
+  .hero h1 { font-size: clamp(36px, 10vw, 56px); letter-spacing: -.045em; }
+  .hero-lead { width: min(620px, 86%); margin-top: 16px; }
+  .hero-lead p { font-size: 15px; line-height: 1.6; }
+  .hero-actions { margin-top: 20px; gap: 16px; }
+  .hero-actions .button { width: min(100%, 420px); min-height: 50px; }
+  .pause-hint { display: none; }
+  .concept-marquee { margin-top: 28px; padding: 4px 0 0; }
+  .concept-group { gap: 14px; padding-right: 14px; }
+  .concept-card {
+    flex: 0 0 min(68vw, 280px);
+    width: min(68vw, 280px);
+  }
+  .concept-title { font-size: clamp(28px, 7vw, 40px); }
+  .concept-brand { font-size: 22px; }
+  .concept-brand small { font-size: 9px; letter-spacing: .06em; max-width: 46%; text-align: right; }
+  .concept-footer { font-size: 10px; letter-spacing: .04em; }
+  .concept-track {
+    animation-duration: 28s;
+    animation-play-state: running;
+  }
+  .hero-caption { font-size: 12px; margin-top: 14px; padding-inline: 6%; }
+  .section { padding-block: 64px; }
+  .section-head { margin-bottom: 36px; }
+  .section-head h2,
+  .studio h2,
+  .faq h2,
+  .process h2 { font-size: clamp(36px, 9vw, 52px); }
+  .project-tabs > button { font-size: 22px; padding: 14px 8px 14px 0; }
   .project-tabs small { display: none; }
   .project-panel { grid-template-columns: 1fr; min-height: 0; }
   .project-visual { min-height: 0; aspect-ratio: 4 / 5; }
-  .project-thinking { padding: 28px 24px; }
-  .project-thinking h3 { font-size: 36px; }
-  .project-hypothesis p { font-size: 23px; }
+  .project-thinking { padding: 24px 20px; }
+  .project-thinking h3 { font-size: 32px; margin: 20px 0 22px; }
+  .project-hypothesis p { font-size: 21px; }
   .chapter-frame {
     margin: 0;
-    height: 640px;
+    height: min(560px, 148vw);
     min-height: 0;
   }
   .chapter-shade { background: linear-gradient(180deg, #14201750 0%, transparent 36%, #122015d4 100%); }
   .chapter-copy {
     top: auto;
-    bottom: 72px;
+    bottom: 64px;
     max-width: 88%;
   }
-  .chapter-copy h2 { font-size: 64px; margin: 18px 0; }
+  .chapter-copy h2 { font-size: clamp(44px, 12vw, 58px); margin: 16px 0; }
+  .chapter-copy p { font-size: 14px; }
   .method-grid,
   .fit-grid,
   .offer-grid,
   .process-steps { grid-template-columns: 1fr; }
   .process-steps { grid-template-columns: 1fr 1fr; }
   .fit-grid article { padding: 28px 24px; }
-  .offer-card { padding: 28px 24px; }
-  .offer-card h3 { font-size: 46px; }
-  .price { font-size: 44px; }
+  .offer-card { padding: 24px 20px; }
+  .offer-card h3 { font-size: clamp(36px, 10vw, 44px); }
+  .price { font-size: 40px; }
   .price span { display: block; margin: 8px 0 0; }
+  .method-grid h3 { font-size: 28px; }
+  .method-art { height: 200px; }
   .process { padding-block: 64px; }
   .process-intro { margin-bottom: 32px; }
   .contact-row,
@@ -1165,9 +1200,13 @@ dialog .button { width: 100%; margin-top: 8px; }
     gap: 36px;
   }
   .contact-orb:hover { transform: none; }
-  .statement span { font-size: 56px; }
-  dialog { padding: 32px 24px; }
-  dialog h2 { font-size: 42px; }
+  .statement { padding-block: 24px; }
+  .statement span { font-size: clamp(40px, 12vw, 52px); }
+  .contact { padding: 56px 0 24px; }
+  .contact h2 { font-size: clamp(42px, 11vw, 64px); }
+  .footer-wordmark { font-size: clamp(64px, 18vw, 140px); padding: 28px 0 20px; }
+  dialog { padding: 28px 20px; width: min(540px, calc(100% - 20px)); }
+  dialog h2 { font-size: 36px; }
   input, select, textarea { font-size: 16px; }
   footer { flex-wrap: wrap; }
   footer span:nth-child(2) { order: 3; flex-basis: 100%; }
@@ -1177,6 +1216,17 @@ dialog .button { width: 100%; margin-top: 8px; }
   .process-steps { grid-template-columns: 1fr; }
   .hero-actions { flex-direction: column; }
   .button { width: min(100%, 360px); }
+  .ticker .ticker-track > span { font-size: 11px; letter-spacing: .1em; }
+  .faq-list summary { font-size: 15px; }
+  footer { font-size: 12px; }
+}
+
+@media (max-width: 820px) {
+  .motion-ready .reveal,
+  .motion-ready .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
