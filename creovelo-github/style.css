@@ -247,24 +247,48 @@ button:hover .mark { transform: scale(.82); opacity: 1; }
   flex-wrap: wrap;
 }
 
-.work-wall {
-  width: min(1280px, 92%);
-  margin: 40px auto 0;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
-  align-items: stretch;
+.concept-marquee {
+  position: relative;
+  width: 100%;
+  margin: 48px 0 0;
+  padding: 12px 0 8px;
+  overflow: hidden;
 }
-.work-tile {
+.concept-track {
+  display: flex;
+  width: max-content;
+  animation: concept-drift 52s linear infinite;
+  will-change: transform;
+}
+.concept-marquee:hover .concept-track,
+.concept-marquee:focus-within .concept-track {
+  animation-play-state: paused;
+}
+.concept-marquee.is-static {
+  overflow-x: auto;
+}
+.concept-marquee.is-static .concept-track {
+  animation: none;
+}
+.concept-group {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 22px;
+  padding-right: 22px;
+}
+.concept-card {
   position: relative;
   display: block;
+  flex: 0 0 clamp(280px, 28vw, 420px);
+  width: clamp(280px, 28vw, 420px);
+  aspect-ratio: 4 / 5;
   overflow: hidden;
   background: #ddd6c6;
-  aspect-ratio: 4 / 5;
-  max-height: min(520px, 50vh);
   box-shadow: var(--shadow);
+  color: #2a261c;
 }
-.work-tile img {
+.concept-card img {
   width: 100%;
   height: 100%;
   transition: transform 1.1s var(--ease);
@@ -272,46 +296,59 @@ button:hover .mark { transform: scale(.82); opacity: 1; }
 .theme-serein img { object-position: 50% 72%; }
 .theme-mora img { object-position: 50% 62%; }
 .theme-onda img { object-position: 50% 38%; }
-.work-tile:hover img { transform: scale(1.04); }
-.work-tile-copy {
+.concept-card:hover img { transform: scale(1.035); }
+.theme-mora { color: #fff6de; }
+.theme-onda { color: #163f4e; }
+.concept-brand {
   position: absolute;
-  inset: auto 0 0 0;
-  padding: 22px 22px 20px;
-  color: #f7f3e8;
-  background: linear-gradient(180deg, transparent, #141910d4 78%);
-}
-.theme-serein .work-tile-copy { color: #2a261c; background: linear-gradient(180deg, transparent, #efe6d4f0 70%); }
-.theme-mora .work-tile-copy { color: #fff6de; background: linear-gradient(180deg, transparent, #6c1810ee 76%); }
-.theme-onda .work-tile-copy { color: #163f4e; background: linear-gradient(180deg, transparent, #dbe6e4ef 72%); }
-.work-brand {
+  top: 5.5%;
+  left: 7%;
+  right: 7%;
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   font: 26px/1 var(--serif);
 }
-.work-brand small {
-  font: 10px/1.3 var(--sans);
+.concept-brand small {
+  font: 10px/1.4 var(--sans);
   letter-spacing: .12em;
   text-transform: uppercase;
 }
-.work-tile-copy strong {
-  display: block;
-  margin: 10px 0 14px;
-  font: 28px/.95 var(--serif);
-  letter-spacing: -.02em;
+.concept-title {
+  position: absolute;
+  left: 7%;
+  top: 14%;
+  font: clamp(34px, 3.2vw, 50px)/.94 var(--serif);
+  letter-spacing: -.03em;
 }
-.work-tile-copy em { font-style: italic; }
-.work-meta {
+.concept-title em { font-style: italic; }
+.concept-footer {
+  position: absolute;
+  left: 7%;
+  right: 7%;
+  bottom: 5.5%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 11px;
   letter-spacing: .08em;
   text-transform: uppercase;
-  opacity: .75;
 }
+.concept-footer .mark {
+  width: 14px;
+  height: 14px;
+  flex-basis: 14px;
+}
+.concept-footer .mark:after { inset: 5px; width: 3px; height: 3px; }
 .hero-caption {
   text-align: center;
-  margin-top: 22px;
+  margin-top: 18px;
   font-size: 13px;
   color: var(--muted);
+}
+@keyframes concept-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
 }
 
 .ticker,
@@ -1003,7 +1040,7 @@ dialog .button { width: 100%; margin-top: 8px; }
 
 @media (max-width: 1100px) {
   .section { padding-block: 88px; }
-  .work-wall { grid-template-columns: 1fr 1fr 1fr; }
+  .concept-card { flex-basis: clamp(250px, 30vw, 360px); width: clamp(250px, 30vw, 360px); }
   .section-head,
   .faq-layout { grid-template-columns: 1fr; gap: 28px; }
   .project-thinking { padding: 32px; }
@@ -1076,22 +1113,15 @@ dialog .button { width: 100%; margin-top: 8px; }
   .hero { padding-top: 36px; }
   .hero h1 { font-size: clamp(48px, 13vw, 78px); }
   .hero-lead p { font-size: 16px; }
-  .work-wall {
-    display: flex;
-    width: 100%;
-    overflow-x: auto;
-    gap: 14px;
-    padding: 0 6% 8px;
-    scroll-snap-type: x mandatory;
-    scrollbar-width: none;
-  }
-  .work-wall::-webkit-scrollbar { display: none; }
-  .work-tile,
-  .work-tile:first-child {
+  .concept-marquee { margin-top: 32px; }
+  .concept-group { gap: 16px; padding-right: 16px; }
+  .concept-card {
     flex: 0 0 76vw;
-    aspect-ratio: 4 / 5;
-    scroll-snap-align: center;
+    width: 76vw;
   }
+  .concept-title { font-size: clamp(34px, 8vw, 52px); }
+  .concept-brand { font-size: 24px; }
+  .concept-track { animation-duration: 42s; }
   .section { padding-block: 72px; }
   .project-tabs > button { font-size: 24px; }
   .project-tabs small { display: none; }
@@ -1156,7 +1186,10 @@ dialog .button { width: 100%; margin-top: 8px; }
     transition: none !important;
   }
   .ticker-track,
-  .statement .ticker-track { transform: none; }
+  .statement .ticker-track,
+  .concept-track { transform: none; animation: none !important; }
+  .concept-marquee { overflow-x: auto; }
+  .concept-group + .concept-group { display: none; }
   .chapter-frame img { transform: none; }
   .motion-ready .reveal { opacity: 1; transform: none; }
 }
