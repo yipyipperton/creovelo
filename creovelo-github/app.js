@@ -61,16 +61,9 @@ header.addEventListener("keydown", (event) => {
 });
 
 let ticking = false;
-let lastY = 0;
 function updateChrome() {
   const y = window.scrollY;
   header.classList.toggle("has-scrolled", y > 12);
-  if (!reduced.matches && !document.documentElement.classList.contains("nav-open")) {
-    header.classList.toggle("is-hidden", y > lastY && y > 140);
-  } else {
-    header.classList.remove("is-hidden");
-  }
-  lastY = y;
   const max = document.documentElement.scrollHeight - innerHeight;
   progress.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
   if (chapter && !reduced.matches) {
