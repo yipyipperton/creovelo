@@ -1,6 +1,16 @@
 # Creovelo website
 
-Independent performance creative studio site. Plain HTML, CSS, and JavaScript — no build step.
+Independent performance creative studio site. Plain HTML, CSS, and JavaScript — no build step. Site files live at the repository root so Cloudflare Pages can serve `index.html` at `/`.
+
+## Deploy on Cloudflare Pages
+
+In the Pages project settings:
+
+- Framework preset: **None**
+- Build command: leave empty
+- Output directory: `/` or `.`
+
+Do not point the project at `creovelo-github`. That folder is gone; the site is the repo root.
 
 ## Preview locally
 
