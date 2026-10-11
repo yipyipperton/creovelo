@@ -10,7 +10,7 @@ In the Pages project settings:
 - Build command: leave empty
 - Output directory: `/` or `.`
 
-Do not point the project at `creovelo-github`. That folder is gone; the site is the repo root.
+The same site is published at `/` and `/creovelo-github/` so either Cloudflare output setting works. After deploy, https://creovelo.com/ should load.
 
 ## Preview locally
 
