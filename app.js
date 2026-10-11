@@ -122,13 +122,15 @@ document.querySelector("#year").textContent = new Date().getFullYear();
 const conceptGroup = document.querySelector(".concept-group");
 const conceptTrack = document.querySelector(".concept-track");
 if (conceptGroup && conceptTrack && !reduced.matches) {
-  const clone = conceptGroup.cloneNode(true);
-  clone.setAttribute("aria-hidden", "true");
-  clone.querySelectorAll("a").forEach((link) => {
-    link.tabIndex = -1;
-    link.setAttribute("aria-hidden", "true");
-  });
-  conceptTrack.append(clone);
+  if (conceptTrack.querySelectorAll(".concept-group").length < 2) {
+    const clone = conceptGroup.cloneNode(true);
+    clone.setAttribute("aria-hidden", "true");
+    clone.querySelectorAll("a").forEach((link) => {
+      link.tabIndex = -1;
+      link.setAttribute("aria-hidden", "true");
+    });
+    conceptTrack.append(clone);
+  }
 } else {
   document.querySelector(".concept-marquee")?.classList.add("is-static");
 }
