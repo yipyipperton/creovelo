@@ -257,15 +257,9 @@ button:hover .mark { transform: scale(.82); opacity: 1; }
 .concept-track {
   display: flex;
   width: max-content;
-  animation: concept-drift 52s linear infinite;
+  animation: concept-drift 90s linear infinite;
   transform: translateZ(0);
   backface-visibility: hidden;
-}
-@media (hover: hover) and (pointer: fine) {
-  .concept-marquee:hover .concept-track,
-  .concept-marquee:focus-within .concept-track {
-    animation-play-state: paused;
-  }
 }
 .concept-marquee.is-static {
   overflow-x: auto;
@@ -387,8 +381,6 @@ button:hover .mark { transform: scale(.82); opacity: 1; }
   background: #899774;
   margin-inline: 36px;
 }
-.ticker:hover .ticker-track,
-.statement:hover .ticker-track { animation-play-state: paused; }
 
 .section-head {
   display: grid;
@@ -1133,7 +1125,6 @@ dialog .button { width: 100%; margin-top: 8px; }
   .hero-lead p { font-size: 15px; line-height: 1.6; }
   .hero-actions { margin-top: 20px; gap: 16px; }
   .hero-actions .button { width: min(100%, 420px); min-height: 50px; }
-  .pause-hint { display: none; }
   .concept-marquee { margin-top: 28px; padding: 4px 0 0; }
   .concept-group { gap: 14px; padding-right: 14px; }
   .concept-card {
@@ -1144,10 +1135,7 @@ dialog .button { width: 100%; margin-top: 8px; }
   .concept-brand { font-size: 22px; }
   .concept-brand small { font-size: 9px; letter-spacing: .06em; max-width: 46%; text-align: right; }
   .concept-footer { font-size: 10px; letter-spacing: .04em; }
-  .concept-track {
-    animation-duration: 28s;
-    animation-play-state: running;
-  }
+  .concept-track { animation-duration: 70s; }
   .hero-caption { font-size: 12px; margin-top: 14px; padding-inline: 6%; }
   .section { padding-block: 64px; }
   .section-head { margin-bottom: 36px; }

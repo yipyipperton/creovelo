@@ -229,3 +229,13 @@ document.querySelector(".project-next").addEventListener("click", () => {
 document.querySelectorAll("[data-select]").forEach((link) => {
   link.addEventListener("click", () => selectProject(link.dataset.select));
 });
+
+const faqs = [...document.querySelectorAll(".faq-list details")];
+faqs.forEach((item) => {
+  item.addEventListener("toggle", () => {
+    if (!item.open) return;
+    faqs.forEach((other) => {
+      if (other !== item) other.open = false;
+    });
+  });
+});
