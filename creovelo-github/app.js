@@ -125,20 +125,32 @@ form.addEventListener("submit", async (event) => {
   };
 
   try {
-    const response = await fetch("/api/contact", {
+    if (data.get("company_website")) {
+      form.reset();
+      status.className = "is-success";
+      status.textContent = "Sent. We’ll reply from hello@creovelo.com.";
+      return;
+    }
+
+    const response = await fetch("https://formsubmit.co/ajax/creovelo719@gmail.com", {
       method: "POST",
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({
-        name: data.get("name"),
-        email: data.get("email"),
-        brand: data.get("brand"),
-        service: data.get("service"),
-        goals: data.get("goals"),
-        company_website: data.get("company_website"),
+        Name: data.get("name"),
+        Email: data.get("email"),
+        Brand: data.get("brand"),
+        Interest: data.get("service"),
+        "What they want to test": data.get("goals") || "I would love to discuss the right creative direction.",
+        _replyto: data.get("email"),
+        _subject: `Creovelo inquiry — ${data.get("service")}`,
+        _template: "box",
+        _captcha: "false",
       }),
     });
     const result = await response.json().catch(() => ({}));
-    if (!response.ok) throw new Error(result.error || "Could not send your inquiry.");
+    if (!response.ok || result.success === false || result.success === "false") {
+      throw new Error(result.message || "Could not send your inquiry.");
+    }
     form.reset();
     status.className = "is-success";
     status.textContent = "Sent. We’ll reply from hello@creovelo.com.";
