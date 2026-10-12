@@ -17,7 +17,7 @@ if ("IntersectionObserver" in window && !reduced.matches) {
       }
     });
   }, { threshold: 0.1 });
-  document.querySelectorAll(".section-head, .method-grid article, .fit-grid article, .offer-card, .process-steps li").forEach((el) => {
+  document.querySelectorAll(".section-head, .why-grid article, .fit-grid article, .offer-primary, .offer-secondary, .process-steps li").forEach((el) => {
     el.classList.add("reveal");
     observer.observe(el);
   });
@@ -93,7 +93,7 @@ document.querySelectorAll("[data-contact]").forEach((button) => {
   button.addEventListener("click", () => {
     trigger = button;
     closeMenu();
-    form.elements.service.value = button.dataset.contact || "Let’s find the right fit";
+    form.elements.service.value = button.dataset.contact || "Creative Testing Sprint";
     document.querySelector("#form-status").textContent = "";
     dialog.showModal();
   });
