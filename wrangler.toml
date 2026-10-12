@@ -9,7 +9,8 @@ html_handling = "auto-trailing-slash"
 
 # Lets the same Cloudflare project send form inquiries.
 # Enable Email Routing on creovelo.com and verify creovelo719@gmail.com
-# as a destination address.
+# as a destination address. Add RESEND_API_KEY as a Cloudflare secret,
+# never in this file.
 [[send_email]]
 name = "EMAIL"
 

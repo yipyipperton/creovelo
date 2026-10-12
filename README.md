@@ -21,7 +21,15 @@ The form posts to `/api/contact` on this same Cloudflare project. After Email Ro
 
 `CONTACT_FROM` is already `hello@creovelo.com`. Inquiries are delivered to `creovelo719@gmail.com`. Reply in Gmail — the form sets Reply-To to the visitor’s address.
 
-Optional fallback if Cloudflare sending is not available: create a [Resend](https://resend.com) API key, add it as the `RESEND_API_KEY` secret, and verify creovelo.com there.
+To send through [Resend](https://resend.com):
+
+1. In Resend, add and verify the creovelo.com domain so mail can come from `hello@creovelo.com`.
+2. Create an API key.
+3. In Cloudflare, open the **creovelo** project → **Settings** → **Variables and Secrets**.
+4. Add a secret named `RESEND_API_KEY`. Paste the key there only — never commit it or send it in chat.
+5. Redeploy from current `main`.
+
+The site then sends a formatted HTML inquiry to `creovelo719@gmail.com`.
 
 If your Cloudflare project is a **Worker** instead of Pages, set `main = "worker.js"` and add `binding = "ASSETS"` plus `run_worker_first = ["/api/*"]` under `[assets]` in `wrangler.toml`.
 
