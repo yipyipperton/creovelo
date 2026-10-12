@@ -1,3 +1,12 @@
 original-images/
 README.md
 .git/
+functions/
+scripts/
+worker.js
+wrangler.toml
+node_modules/
+package.json
+package-lock.json
+*.test.mjs
+.dev.vars
