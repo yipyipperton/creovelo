@@ -108,13 +108,54 @@ dialog.addEventListener("click", (event) => {
 });
 dialog.addEventListener("close", () => trigger?.focus());
 
-form.addEventListener("submit", (event) => {
+form.addEventListener("submit", async (event) => {
   event.preventDefault();
+  const status = document.querySelector("#form-status");
+  const button = form.querySelector("[type=submit]");
   const data = new FormData(form);
-  const subject = `Creovelo inquiry — ${data.get("service")}`;
-  const body = `Hello Creovelo,\n\nI'm ${data.get("name")} from ${data.get("brand")}.\n\nI'm interested in: ${data.get("service")}\n\nWhat we're looking to test:\n${data.get("goals") || "I would love to discuss the right creative direction."}\n\nThanks,\n${data.get("name")}`;
-  location.href = `mailto:hello@creovelo.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-  document.querySelector("#form-status").textContent = "Your email app should open with a draft. If it does not, email hello@creovelo.com directly. Your inquiry has not been sent from this site.";
+  status.textContent = "";
+  status.className = "";
+  button.disabled = true;
+  button.setAttribute("aria-busy", "true");
+
+  const fallback = () => {
+    const subject = `Creovelo inquiry — ${data.get("service")}`;
+    const body = `Hello Creovelo,\n\nI'm ${data.get("name")} from ${data.get("brand")}.\n\nI'm interested in: ${data.get("service")}\n\nWhat we're looking to test:\n${data.get("goals") || "I would love to discuss the right creative direction."}\n\nThanks,\n${data.get("name")}\n${data.get("email") || ""}`;
+    return `mailto:hello@creovelo.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  };
+
+  try {
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", Accept: "application/json" },
+      body: JSON.stringify({
+        name: data.get("name"),
+        email: data.get("email"),
+        brand: data.get("brand"),
+        service: data.get("service"),
+        goals: data.get("goals"),
+        company_website: data.get("company_website"),
+      }),
+    });
+    const result = await response.json().catch(() => ({}));
+    if (!response.ok) throw new Error(result.error || "Could not send your inquiry.");
+    form.reset();
+    status.className = "is-success";
+    status.textContent = "Sent. We’ll reply from hello@creovelo.com.";
+    status.scrollIntoView({ block: "nearest" });
+  } catch (error) {
+    status.className = "is-error";
+    status.textContent = `${error.message} You can also email hello@creovelo.com.`;
+    const link = document.createElement("a");
+    link.href = fallback();
+    link.textContent = "Open a draft instead";
+    status.append(" ");
+    status.append(link);
+    status.append(".");
+  } finally {
+    button.disabled = false;
+    button.removeAttribute("aria-busy");
+  }
 });
 
 document.querySelector("#year").textContent = new Date().getFullYear();
