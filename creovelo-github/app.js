@@ -142,6 +142,7 @@ form.addEventListener("submit", async (event) => {
     form.reset();
     status.className = "is-success";
     status.textContent = "Sent. We’ll reply from hello@creovelo.com.";
+    status.scrollIntoView({ block: "nearest" });
   } catch (error) {
     status.className = "is-error";
     status.textContent = `${error.message} You can also email hello@creovelo.com.`;

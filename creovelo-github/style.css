@@ -1018,6 +1018,8 @@ input:focus, select:focus, textarea:focus {
   outline-offset: 1px;
 }
 dialog .button { width: 100%; margin-top: 8px; }
+#form-status { min-height: 0; }
+#form-status:not(:empty) { margin-bottom: 8px; }
 dialog .button[disabled] { opacity: .55; }
 .form-note, #form-status {
   font-size: 13px;
