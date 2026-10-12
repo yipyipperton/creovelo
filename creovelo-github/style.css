@@ -212,6 +212,19 @@ ol { margin: 0; padding: 0; }
   color: var(--muted);
   max-width: 38ch;
 }
+.hero-price-chip {
+  display: none;
+  margin-top: 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--ink-soft);
+}
+.hero-price-chip strong {
+  font-family: var(--display);
+  font-size: 1.15em;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
 .hero-actions {
   display: flex;
   align-items: center;
@@ -920,6 +933,7 @@ dialog .button[disabled] { opacity: .55; }
   .offer-primary,
   .offer-secondary,
   .why-grid { grid-template-columns: 1fr; gap: 24px; }
+  .hero-price-chip { display: block; }
   .offer-secondary { grid-template-columns: 1fr; }
   .project-thinking { padding: 28px; }
   .project-panel,
