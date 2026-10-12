@@ -1,3 +1,5 @@
 /creovelo-github / 301
 /creovelo-github/ / 301
 /creovelo-github/* /:splat 301
+/portfolio /spec-portfolio/ 301
+/portfolio/ /spec-portfolio/ 301
