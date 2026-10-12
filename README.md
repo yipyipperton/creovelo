@@ -23,15 +23,14 @@ The form posts to `/api/contact` on this same Cloudflare project. After Email Ro
 
 To send through [Resend](https://resend.com):
 
-1. In Resend, add and verify the creovelo.com domain so mail can come from `hello@creovelo.com`.
-2. Create an API key.
-3. In Cloudflare, open the **creovelo** project → **Settings** → **Variables and Secrets**.
-4. Add a secret named `RESEND_API_KEY`. Paste the key there only — never commit it or send it in chat.
-5. Redeploy from current `main`.
+1. Redeploy this project from current `main` first. The site must be a Worker with `worker.js`, not static files only. Cloudflare blocks secrets on assets-only Workers.
+2. In Resend, add and verify the creovelo.com domain so mail can come from `hello@creovelo.com`.
+3. Create an API key.
+4. In Cloudflare, open the **creovelo** Worker → **Settings** → **Variables and Secrets**.
+5. Add a secret named `RESEND_API_KEY`. Paste the key there only — never commit it or send it in chat.
+6. Save. A second deploy is not required after adding a secret, but redeploy if the form still cannot send.
 
 The site then sends a formatted HTML inquiry to `creovelo719@gmail.com`.
-
-If your Cloudflare project is a **Worker** instead of Pages, set `main = "worker.js"` and add `binding = "ASSETS"` plus `run_worker_first = ["/api/*"]` under `[assets]` in `wrangler.toml`.
 
 ## Deploy
 
@@ -62,9 +61,9 @@ Then visit http://127.0.0.1:8788. Submissions are accepted and printed in the te
 - `index.html`: page content and structure
 - `style.css`: the full design system
 - `app.js`: navigation, creative showcase, inquiry dialog, and scroll interactions
-- `functions/api/contact.js`: Cloudflare Pages Function for form submissions
+- `worker.js`: Cloudflare Worker entry. Serves `/api/contact` and the static site.
 - `functions/_lib/contact.js`: shared validation and email sending
-- `worker.js`: Worker entry if the project is deployed as a Worker
+- `functions/api/contact.js`: Pages Function fallback for the same API
 - `favicon.svg`: site icon
 - Four `.webp` images: optimized assets used on the site
 - `original-images/`: full-resolution source images for future editing
