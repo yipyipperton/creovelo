@@ -6,3 +6,12 @@ pages_build_output_dir = "."
 directory = "."
 not_found_handling = "404-page"
 html_handling = "auto-trailing-slash"
+
+# Lets the same Cloudflare project send form inquiries.
+# Enable Email Routing on creovelo.com, then set the CONTACT_INBOX secret
+# to the personal inbox you verify there.
+[[send_email]]
+name = "EMAIL"
+
+[vars]
+CONTACT_FROM = "hello@creovelo.com"
