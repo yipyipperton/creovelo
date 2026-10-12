@@ -1,22 +1,8 @@
 name = "creovelo"
-main = "worker.js"
 compatibility_date = "2026-10-11"
+pages_build_output_dir = "."
 
-# Worker + static assets. A Worker script is required before Cloudflare
-# will let you add secrets such as RESEND_API_KEY.
 [assets]
 directory = "."
-binding = "ASSETS"
 not_found_handling = "404-page"
 html_handling = "auto-trailing-slash"
-run_worker_first = ["/api/*"]
-
-# Enable Email Routing on creovelo.com and verify creovelo719@gmail.com
-# as a destination address. Add RESEND_API_KEY as a Cloudflare secret
-# after this Worker script is deployed — never put the key in this file.
-[[send_email]]
-name = "EMAIL"
-
-[vars]
-CONTACT_FROM = "hello@creovelo.com"
-CONTACT_INBOX = "creovelo719@gmail.com"
