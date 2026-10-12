@@ -128,7 +128,7 @@ function rawEmail({ from, to, replyTo, subject, text }) {
 async function sendWithCloudflare(env, inquiry, message) {
   if (!env.EMAIL?.send) return false;
   const from = env.CONTACT_FROM || "hello@creovelo.com";
-  const to = env.CONTACT_INBOX;
+  const to = env.CONTACT_INBOX || "creovelo719@gmail.com";
   try {
     await env.EMAIL.send({
       from: { name: "Creovelo", email: from },
@@ -173,7 +173,7 @@ async function sendWithResend(env, inquiry, message) {
     },
     body: JSON.stringify({
       from,
-      to: [env.CONTACT_INBOX],
+      to: [env.CONTACT_INBOX || "creovelo719@gmail.com"],
       reply_to: inquiry.email,
       subject: message.subject,
       text: message.text,
@@ -188,9 +188,6 @@ async function sendWithResend(env, inquiry, message) {
 }
 
 export async function deliverInquiry(env, inquiry) {
-  if (!env.CONTACT_INBOX) {
-    return { ok: false, error: "CONTACT_INBOX is not configured.", status: 503 };
-  }
   const message = buildInquiry(inquiry);
   if (await sendWithCloudflare(env, inquiry, message)) return { ok: true };
   if (await sendWithResend(env, inquiry, message)) return { ok: true };
